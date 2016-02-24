@@ -34,7 +34,7 @@ class FanoutManager(treeWidth: Int, treeDepth: Int) extends Actor with ActorLogg
 
       val msPerActor: Float = stopWatch.getTime/totalActorCount.asInstanceOf[Float]
       val usPerActor: Double = Math.round(stopWatch.getTime/totalActorCount.asInstanceOf[Double]*1000)
-      log.info(s" Avg. creation time per actor $usPerActor µs/actor ($msPerActor ms).")
+      log.info(s" Avg. creation time per actor $usPerActor µs ($msPerActor ms).")
       context.system.terminate()
     }
   }
