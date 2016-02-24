@@ -12,6 +12,9 @@
     <modules>
     	<module>akka-benchmarks</module>
     	<module>akka-benchmarks/akka-generation-perf</module>
+    	<module>akka-benchmarks/akka-message-perf</module>
+    	<!--<module>akka-benchmarks/akka-network-perf</module>-->
+    	<!--<module>akka-benchmarks/akka-http-perf</module>-->
     </modules>
 
     <dependencies>

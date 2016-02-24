@@ -37,7 +37,7 @@ class ChildGenerator() extends Actor with ActorLogging {
     }
   }
 
-  def escalateStatus(statusReply: StatusReply): Unit = {
+  def forwardStatus(statusReply: StatusReply): Unit = {
     // Send the status to the parent, if all direct childs have answered
     childCounts += statusReply.actorCount
     statusReplies += 1
@@ -50,6 +50,6 @@ class ChildGenerator() extends Actor with ActorLogging {
 
   override def receive: Receive = {
     case IncubateRequest(seed, maxFanout) => layEggs(seed, maxFanout)
-    case statusReply : StatusReply => escalateStatus(statusReply)
+    case statusReply : StatusReply => forwardStatus(statusReply)
   }
 }
