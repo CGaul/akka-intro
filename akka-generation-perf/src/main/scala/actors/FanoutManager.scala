@@ -4,17 +4,15 @@ import akka.actor.{Props, ActorLogging, Actor}
 import messages.{IncubateRequest, StatusReply}
 import org.apache.commons.lang.time.StopWatch
 
-object FanoutObserver{
-  def props():Props = Props(new FanoutObserver())
+object FanoutManager{
+  def props(treeWidth: Int, treeDepth: Int):Props = Props(new FanoutManager(treeWidth, treeDepth))
 }
 /**
-  * Created by costa on 2/24/16.
+  * @author constantin on 2/24/16.
   */
-class FanoutObserver extends Actor with ActorLogging {
+class FanoutManager(treeWidth: Int, treeDepth: Int) extends Actor with ActorLogging {
 
   val stopWatch : StopWatch = new StopWatch()
-  val width = 10
-  val fanout = 6
 
   var receivedReplies = 0
   var totalActorCount : Long = 0
@@ -22,7 +20,7 @@ class FanoutObserver extends Actor with ActorLogging {
   val firstGenerator = context.actorOf(Props(classOf[ChildGenerator]), name = "firstGenerator")
   log.info(s"Starting first Egg-layer at $firstGenerator")
 
-  firstGenerator ! IncubateRequest(width, fanout)
+  firstGenerator ! IncubateRequest(treeWidth, treeDepth)
   log.info(s"Sending first incubate request to generator... now kill it before it lays eggs!")
   stopWatch.start()
 
@@ -30,9 +28,13 @@ class FanoutObserver extends Actor with ActorLogging {
     receivedReplies += 1
     totalActorCount += actorCount
     log.info(s"Total actor count: $totalActorCount")
-    if(receivedReplies == fanout +1){
+    if(receivedReplies == treeDepth +1){
       stopWatch.stop()
       log.info(s" Max actor count reached after ${stopWatch.getTime} ms.")
+
+      val msPerActor: Float = stopWatch.getTime/totalActorCount.asInstanceOf[Float]
+      val usPerActor: Double = Math.round(stopWatch.getTime/totalActorCount.asInstanceOf[Double]*1000)
+      log.info(s" Avg. creation time per actor $usPerActor µs/actor ($msPerActor ms).")
       context.system.terminate()
     }
   }

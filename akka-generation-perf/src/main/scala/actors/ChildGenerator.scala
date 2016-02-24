@@ -8,7 +8,7 @@ object ChildGenerator {
 }
 
 /**
-  * Created by costa on 2/23/16.
+  * @author constantin on 2/23/16.
   */
 class ChildGenerator() extends Actor with ActorLogging {
 
