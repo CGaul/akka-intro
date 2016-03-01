@@ -13,6 +13,7 @@
         <scala.base.version>2.11</scala.base.version>
         <akka.version>2.4.2</akka.version>
         <vertx.version>3.2.1</vertx.version>
+        <slf4j.version>1.7.18</slf4j.version>
     </properties>
     <modules>
     	<module>akka-benchmarks</module>
@@ -22,6 +23,7 @@
     	<module>akka-benchmarks/akka-http-perf</module>
 
         <module>vertx-benchmarks</module>
+        <module>vertx-benchmarks/vertx-http-perf</module>
     </modules>
 
 </project>

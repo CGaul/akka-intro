@@ -4,7 +4,7 @@ import akka.actor.{Props, ActorRefFactory, Actor, ActorLogging}
 import spray.routing.HttpService
 
 /**
-  * Created by costa on 3/1/16.
+  * @author constantin, on 3/1/16.
   */
 class HttpEndpoint extends HttpBenchmarkService with Actor with ActorLogging {
   def receive: Receive = runRoute(rootBenchmarkRoute)
