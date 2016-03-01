@@ -14,22 +14,7 @@
     	<module>akka-benchmarks/akka-generation-perf</module>
     	<module>akka-benchmarks/akka-message-perf</module>
     	<!--<module>akka-benchmarks/akka-network-perf</module>-->
-    	<!--<module>akka-benchmarks/akka-http-perf</module>-->
+    	<module>akka-benchmarks/akka-http-perf</module>
     </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-actor_2.11</artifactId>
-            <version>2.4.2</version>
-        </dependency>
-    </dependencies>
-
 
 </project>
