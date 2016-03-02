@@ -21,6 +21,18 @@
             <version>${akka.version}</version>
         </dependency>
 
+        <!-- Hazelcast: Distributed Caching -->
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast</artifactId>
+            <version>3.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast-client</artifactId>
+            <version>3.6.1</version>
+        </dependency>
+
         <!-- Apache commons -->
         <dependency>
             <groupId>commons-lang</groupId>
