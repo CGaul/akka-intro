@@ -21,6 +21,7 @@
     	<module>akka-benchmarks/akka-message-perf</module>
     	<!--<module>akka-benchmarks/akka-network-perf</module>-->
     	<module>akka-benchmarks/akka-spray-http-perf</module>
+        <module>akka-benchmarks/akka-hazelcast-cache-perf</module>
 
         <module>vertx-benchmarks</module>
         <module>vertx-benchmarks/vertx-http-perf</module>
