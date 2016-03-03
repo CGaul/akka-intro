@@ -9,7 +9,7 @@ import scala.concurrent.duration._
 /**
   * Created by constantin on 3/3/16.
   */
-class ClusterManager(benchDataGenerator: ActorRef, clusterSize: Int) extends Actor with ActorLogging {
+class CacheManager(benchDataGenerator: ActorRef, clusterSize: Int) extends Actor with ActorLogging {
   import context.dispatcher
 
 
@@ -59,6 +59,6 @@ class ClusterManager(benchDataGenerator: ActorRef, clusterSize: Int) extends Act
   }
 }
 
-object ClusterManager {
-  def props(benchDataGenerator: ActorRef, clusterSize: Int) = Props(new ClusterManager(benchDataGenerator, clusterSize))
+object CacheManager {
+  def props(benchDataGenerator: ActorRef, clusterSize: Int) = Props(new CacheManager(benchDataGenerator, clusterSize))
 }
