@@ -1,6 +1,6 @@
 package messages
 
-import scala.util.Random
+import akka.actor.ActorRef
 
 /**
   * @author constantin on 2/24/16.
@@ -10,12 +10,12 @@ case class GetBenchData(key: String)
 case class ReplyBenchData(benchData: BenchData)
 
 case class CacheBenchData(key: String, benchData: BenchData)
-case class AckCacheBenchData(key: String)
+case class AckCacheBenchData(key: String, hazelcastActor: ActorRef)
 
 case class BenchData(someData: String)
 object BenchData {
   def generate() : BenchData = {
-    return new BenchData(randomString(10))
+    return new BenchData(randomString(30))
   }
 
   def generateWithKey() : (String, BenchData) = {
