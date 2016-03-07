@@ -9,7 +9,7 @@ import scala.concurrent.duration._
 /**
   * Created by costa on 3/2/16.
   */
-class HazelcastActor(clusterManager: ActorRef) extends Actor with ActorLogging {
+class HazelcastActor(cacheManager: ActorRef) extends Actor with ActorLogging {
   import context.dispatcher
 
 
@@ -43,10 +43,10 @@ class HazelcastActor(clusterManager: ActorRef) extends Actor with ActorLogging {
     }
 
   def sendHazelcastStatus() = {
-    clusterManager ! HazelcastStatus(readCount, writeCount, hazelcastCache.size())
+    cacheManager ! HazelcastStatus(readCount, writeCount, hazelcastCache.size())
   }
 }
 
 object HazelcastActor {
-  def props(clusterObserver: ActorRef) = Props(new HazelcastActor(clusterObserver: ActorRef))
+  def props(cacheManager: ActorRef) = Props(new HazelcastActor(cacheManager: ActorRef))
 }
