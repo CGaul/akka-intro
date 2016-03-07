@@ -22,6 +22,7 @@ class CacheManager(benchDataGenerator: ActorRef, clusterSize: Int) extends Actor
 
   startCluster()
 
+
   def startCluster() = {
     context.system.scheduler.schedule(5 second, 1 second, self, "tick")
     stopWatch.start()

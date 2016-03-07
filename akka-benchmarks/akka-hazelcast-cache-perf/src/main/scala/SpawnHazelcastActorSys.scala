@@ -1,4 +1,4 @@
-import actors.{CacheManager$, HazelcastActor, BenchDataGenerator}
+import actors.{CacheManager, BenchDataGenerator}
 import akka.actor.{Props, ActorSystem}
 
 /**
@@ -14,6 +14,6 @@ object SpawnHazelcastActorSys extends App{
   val benchDataGenerator = system.actorOf(Props(classOf[BenchDataGenerator], messagesPerNode), name = "benchDataGenerator")
   system.log.info(s"Starting BenchDataActor at $benchDataGenerator")
 
-  val clusterManager = system.actorOf(Props(classOf[CacheManager], benchDataGenerator, clusterSize), name = "clusterManager")
-  system.log.info(s"Starting ClusterManager at $clusterManager")
+  val cacheManager = system.actorOf(Props(classOf[CacheManager], benchDataGenerator, clusterSize), name = "cacheManager")
+  system.log.info(s"Starting CacheManager at $cacheManager")
 }
