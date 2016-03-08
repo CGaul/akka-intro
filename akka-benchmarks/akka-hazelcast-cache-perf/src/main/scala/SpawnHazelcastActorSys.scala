@@ -7,7 +7,7 @@ import akka.actor.{Props, ActorSystem}
 object SpawnHazelcastActorSys extends App{
   val system = ActorSystem("HazelcastPerformanceTest")
   val numberMessages: Long = 5000000
-  val clusterSize: Int = 5
+  val clusterSize: Int = 2
 
   val messagesPerNode = numberMessages/clusterSize
 

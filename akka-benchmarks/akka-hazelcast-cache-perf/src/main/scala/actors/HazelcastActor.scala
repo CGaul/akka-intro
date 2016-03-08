@@ -18,7 +18,7 @@ class HazelcastActor(cacheManager: ActorRef) extends Actor with ActorLogging {
   val hazelcastInstance = Hazelcast.newHazelcastInstance(config)
   val hazelcastCache = hazelcastInstance.getMap[String, BenchData]("benchCache")
 
-  val tick = context.system.scheduler.schedule(5 second, 1 second, self, "tick")
+  context.system.scheduler.schedule(5 second, 1 second, self, "tick")
 
   var readCount: Long = 0
   var writeCount: Long = 0
