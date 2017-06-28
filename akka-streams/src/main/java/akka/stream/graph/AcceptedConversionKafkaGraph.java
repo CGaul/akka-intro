@@ -52,8 +52,10 @@ public class AcceptedConversionKafkaGraph {
 
         return new AcceptedConversionSource(clickSource, conversionSource)
                 .create()
-                .map(PlainEventSerialization::serialize)
-                .map(serializedEvent -> new ProducerRecord<byte[], byte[]>(acceptedConversionTopic, serializedEvent))
+                .map(event -> {
+                    byte[] serializedEvent = PlainEventSerialization.serialize(event);
+                    return new ProducerRecord<byte[], byte[]>(acceptedConversionTopic, serializedEvent);
+                })
                 .toMat(Producer.plainSink(producerSettings), Keep.right());
     }
 }
