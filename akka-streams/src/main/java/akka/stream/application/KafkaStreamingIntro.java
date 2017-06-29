@@ -10,6 +10,8 @@ import akka.stream.Materializer;
 import akka.stream.event.PriceEvent;
 import akka.stream.event.PriceEventGenerator;
 import akka.stream.flow.WindowGroupingUtils;
+import akka.stream.graphs.DistinctEventsGraph;
+import akka.stream.graphs.PriceEventGraph;
 import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.RunnableGraph;
 import akka.stream.javadsl.Source;
@@ -48,12 +50,8 @@ public class KafkaStreamingIntro {
         Source<PriceEvent, NotUsed> eventSource = Source.fromIterator(() -> PriceEventGenerator.generateNDuplicates(1));
 
         RunnableGraph<CompletionStage<Done>> priceEventTopicGraph =
-                eventSource
-                        .map(event -> {
-                            LOGGER.info("produced event: {}", event);
-                            return event;
-                        })
-                        .toMat(new KafkaProducerSink<PriceEvent>(producerSettings, "price_events").create(), Keep.right());
+                new PriceEventGraph(eventSource, producerSettings, "price_events")
+                        .create();
 
         CompletionStage<Done> priceEventTopicStage = priceEventTopicGraph.run(materializer);
         priceEventTopicStage.thenRun(() -> {
@@ -61,14 +59,8 @@ public class KafkaStreamingIntro {
         });
 
         RunnableGraph<CompletionStage<Done>> sortedPriceEventsGraph =
-                new KafkaConsumerSource<PriceEvent>(consumerSettings, "price_events")
-                        .create()
-                        .via(WindowGroupingUtils.distinctInWindow(10))
-                        .map(event -> {
-                            LOGGER.info("consumed event: {} for hour {}", event, getHourOfDayFromMillis(event));
-                            return event;
-                        })
-                        .toMat(new KafkaProducerSink<PriceEvent>(producerSettings, "sorted_price_events").create(), Keep.right());
+                new DistinctEventsGraph(producerSettings, consumerSettings, "price_events", "distinct_price_events")
+                        .create();
 
         sortedPriceEventsGraph
                 .run(materializer)
@@ -78,7 +70,4 @@ public class KafkaStreamingIntro {
                 });
     }
 
-    private static long getHourOfDayFromMillis(PriceEvent event) {
-        return TimeUnit.MILLISECONDS.toHours(event.getTimestamp()) % 24;
-    }
 }

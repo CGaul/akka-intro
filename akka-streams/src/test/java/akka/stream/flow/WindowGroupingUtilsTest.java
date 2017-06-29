@@ -32,6 +32,6 @@ public class WindowGroupingUtilsTest {
                 .withAttributes(Attributes.logLevels(Logging.InfoLevel(), Logging.InfoLevel(), Logging.ErrorLevel()))
                 .runWith(testSink, materializer)
                 .request(3)
-                .expectNextN(1);
+                .expectNext();
     }
 }
