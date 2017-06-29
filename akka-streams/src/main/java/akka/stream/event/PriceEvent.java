@@ -16,6 +16,10 @@ public class PriceEvent implements Serializable {
         this.pay = pay;
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
+
     @Override
     public String toString() {
         return "PriceEvent{" +

@@ -12,28 +12,37 @@ import java.util.UUID;
  */
 public class PriceEventGenerator {
 
-    private PriceEventGenerator(){
+    private PriceEventGenerator() {
     }
 
     private static final Random RANDOM = new Random();
 
-    public static PriceEvent generate(UUID uuid){
+    public static PriceEvent generate(UUID uuid) {
         int pay = RANDOM.nextInt(100);
-        return new PriceEvent(uuid.toString(),getRandomTimestamp().getTime(), pay);
+        return new PriceEvent(uuid.toString(), getRandomTimestamp().getTime(), pay);
     }
 
-    public static Iterator<PriceEvent> generateN(int n){
+    public static Iterator<PriceEvent> generateN(int n) {
         Collection<PriceEvent> priceEventList = new ArrayList<>(n);
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             priceEventList.add(generate(UUID.randomUUID()));
         }
         return priceEventList.iterator();
     }
 
+    public static Iterator<PriceEvent> generateNDuplicates(int n) {
+        PriceEvent priceEvent = generate(UUID.randomUUID());
+        Collection<PriceEvent> priceEventList = new ArrayList<>(n);
+        for (int i = 0; i < n; i++) {
+            priceEventList.add(priceEvent);
+        }
+        return priceEventList.iterator();
+    }
+
     private static Timestamp getRandomTimestamp() {
-        long offset = Timestamp.valueOf("2017-05-01 00:00:00").getTime();
-        long end = Timestamp.valueOf("2017-07-01 00:00:00").getTime();
+        long offset = Timestamp.valueOf("2017-06-28 00:00:00").getTime();
+        long end = Timestamp.valueOf("2017-06-29 00:00:00").getTime();
         long diff = end - offset + 1;
-        return new Timestamp(offset + (long)(Math.random() * diff));
+        return new Timestamp(offset + (long) (Math.random() * diff));
     }
 }
